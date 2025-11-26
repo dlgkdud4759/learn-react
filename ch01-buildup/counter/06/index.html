@@ -14,24 +14,9 @@
 
       // 헤더 컴포넌트
       function Header() {
-        return Reaction.createElement(
-          "header",
-          null,
-          Reaction.createElement(
-            "h1",
-            null,
-            "Counter - 06 UI 구성 요소별 각각의 함수로 분리(컴포넌트로 만들기)"
-          ),
-          Reaction.createElement(
-            "p",
-            null,
-            "파일 경로: ",
-            Reaction.createElement(
-              "span",
-              null,
-              `ch${document.URL.split("/ch")[1]}index.html`
-            )
-          )
+        return (
+          Reaction.createElement("header", null, Reaction.createElement( "h1", null, "Counter - 06 UI 구성 요소별 각각의 함수로 분리(컴포넌트로 만들기)"),
+          Reaction.createElement("p", null, "파일 경로: ", Reaction.createElement( "span", null, `ch${document.URL.split("/ch")[1]}index.html`)));
         );
       }
 
@@ -67,34 +52,11 @@
           // 화면 갱신, count 값 화면에 표시
           document.querySelector("#counter > span").textContent = count;
         };
-        return Reaction.createElement(
-          "div",
-          { id: "counter" },
-          Reaction.createElement(
-            "button",
-            {
-              type: "button",
-              onclick: handleDown,
-            },
-            "-"
-          ),
-          Reaction.createElement(
-            "button",
-            {
-              type: "button",
-              onclick: handleReset,
-            },
-            0
-          ),
-          Reaction.createElement(
-            "button",
-            {
-              type: "button",
-              onclick: handleUp,
-            },
-            "+"
-          ),
-          Reaction.createElement("span", null, count)
+        return (
+          Reaction.createElement("div", { id: "counter" }, Reaction.createElement("button", { type: "button", onclick: handleDown }, "-"),
+          Reaction.createElement("button", { type: "button", onclick: handleReset }, 0),
+          Reaction.createElement("button", { type: "button", onclick: handleUp }, "+"),
+          Reaction.createElement("span", null, count));
         );
       }
 
