@@ -13,53 +13,16 @@
       import Reaction from "./reaction.js";
 
       function App() {
-        return Reaction.createElement(
-          "div",
-          { id: "app" },
-          Reaction.createElement(
-            "header",
-            null,
-            Reaction.createElement(
-              "h1",
-              null,
-              "Counter - 05 createRoot(), render() 함수 만들기"
-            ),
-            Reaction.createElement(
-              "p",
-              null,
-              "파일 경로: ",
-              Reaction.createElement("span", { id: "filepath" })
-            )
-          ),
-          Reaction.createElement(
-            "div",
-            { id: "counter" },
-            Reaction.createElement(
-              "button",
-              {
-                type: "button",
-                onclick: "handleDown()",
-              },
-              "-"
-            ),
-            Reaction.createElement(
-              "button",
-              {
-                type: "button",
-                onclick: "handleReset(event)",
-              },
-              0
-            ),
-            Reaction.createElement(
-              "button",
-              {
-                type: "button",
-                onclick: "handleUp()",
-              },
-              "+"
-            ),
-            Reaction.createElement("span", null, 0)
-          )
+        return (
+          Reaction.createElement("div", { id: "app" },
+            Reaction.createElement("header", null,
+              Reaction.createElement("h1", null, "Counter - 04 createElement() 함수 하나로 통합"),
+              Reaction.createElement("p", null, "파일 경로: ", Reaction.createElement("span", { id: "filepath" }))),
+            Reaction.createElement("div", { id: "counter" },
+              Reaction.createElement("button", { type: "button", onclick: "handleDown()" }, "-"),
+              Reaction.createElement("button", { type: "button", onclick: "handleReset(event)" }, 0),
+              Reaction.createElement("button", { type: "button", onclick: "handleUp()" }, "+"),
+              Reaction.createElement("span", null, 0)));
         );
       }
 
