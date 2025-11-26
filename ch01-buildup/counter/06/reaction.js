@@ -7,6 +7,9 @@ const reaction = {
     if (props) {
       for (const attrName in props) {
         const value = props[attrName];
+        if (attrName.toLowerCase().startsWith("on")) {
+          elem.addEventListener(attrName.toLowerCase().substring(2), value);
+        }
         elem.setAttribute(attrName, value);
       }
     }
@@ -15,6 +18,8 @@ const reaction = {
     for (let child of Children) {
       if (typeof child === "string" || typeof child === "number") {
         child = document.createTextNode(child);
+      } else if (typeof child === "function") {
+        child = child();
       }
       elem.appendChild(child);
     }
@@ -25,7 +30,6 @@ const reaction = {
   // 루트 노드를 관리하는 객체를 반환
   createRoot: (rootNode) => {
     return {
-      // appFn을 실행한 결과 노드를 루트 노드의 자식으로 렌더링 한다.
       render: (appFn) => {
         rootNode.appendChild(appFn());
       },
