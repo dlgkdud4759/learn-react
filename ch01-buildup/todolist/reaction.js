@@ -24,7 +24,13 @@ const reaction = {
       } else if (typeof child === "function") {
         child = child();
       }
-      elem.appendChild(child);
+
+      // child가 배열일 경우
+      if (Array.isArray(child)) {
+        child.forEach((c) => elem.appendChild(c));
+      } else {
+        elem.appendChild(child);
+      }
     }
 
     // 요소 노드 반환
@@ -61,6 +67,7 @@ const reaction = {
       // Object.is(a, b): a와 b가 같은지 여부를 반환
       // a, b가 원시형 타입일때는 값이 다를경우 false됨
       // a, b가 참조형 타입일때는 내부의 속성이 바뀌어도 참조 주소가 바뀌지 않았다면 true가 됨
+      // oldValue [{}, {}, {}], newValue[{}, {}, {}, {}]
       if (!Object.is(oldValue, newValue)) {
         console.log("Reaction: 상태 변경으로 인해 리렌더링 수행");
         _root.render();
