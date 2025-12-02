@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Title from "@/components/Title";
+import TodoList from "@/pages/TodoList";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+export interface TodoItem {
+  _id: number;
+  title: string;
+  done: boolean;
 }
 
-export default App
+// Title, TodoList의 부모 컴포넌트
+function App() {
+  const list: TodoItem[] = [
+    { _id: 1, title: "JavaScript 공부", done: true },
+    { _id: 2, title: "바닐라 프로젝트", done: true },
+    { _id: 3, title: "React 공부", done: false },
+  ];
+
+  return (
+    <div id="app">
+      <div>
+        <Title title="09 Vite로 개발 환경 구축 및 빌드, 배포" />
+        <TodoList list={list} />
+      </div>
+    </div>
+  );
+}
+
+export default App;
