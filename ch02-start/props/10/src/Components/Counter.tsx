@@ -21,8 +21,12 @@ export default function Counter() {
 
   return (
     <div id="counter">
-      <Button onClick={countDown}>-_-</Button>
-      <Button onClick={countReset}>0_0</Button>
+      <Button onClick={countDown} color="red">
+        -_-
+      </Button>
+      <Button onClick={countReset} color="silver">
+        0_0
+      </Button>
       <Button onClick={countUp}>+_+</Button>
       <span>{count}</span>
     </div>
