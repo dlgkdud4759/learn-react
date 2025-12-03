@@ -1,6 +1,7 @@
 import { useState } from "react";
+import Button from "./button";
 
-export function Counter() {
+export default function Counter() {
   const [count, setCount] = useState(0);
 
   // 카운터 감소
@@ -20,15 +21,9 @@ export function Counter() {
 
   return (
     <div id="counter">
-      <button type="button" onClick={countDown}>
-        -_-
-      </button>
-      <button type="button" onClick={countReset}>
-        0_0
-      </button>
-      <button type="button" onClick={countUp}>
-        +_+
-      </button>
+      <Button onClick={countDown}>-_-</Button>
+      <Button onClick={countReset}>0_0</Button>
+      <Button onClick={countUp}>+_+</Button>
       <span>{count}</span>
     </div>
   );
