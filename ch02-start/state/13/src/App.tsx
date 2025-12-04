@@ -25,7 +25,10 @@ function App() {
       <div className="container" onPointerMove={handelMove}>
         <div
           className="circle"
-          style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
+          style={{
+            pointerEvents: "none",
+            transform: `translate(${position.x}px, ${position.y}px)`,
+          }}
         ></div>
       </div>
     </>
