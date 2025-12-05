@@ -18,76 +18,123 @@ interface FormErrors {
   cellphone?: { message: string };
 }
 
+interface ValidateOptions {
+  criteriaMode?: "firstError" | "all";
+  data?: Member;
+}
+
 function App() {
   // input 요소를 제어 컴포넌트로 만들기 위해서 상태로 정의
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [cellphone, setCellphone] = useState("010");
+  // const [name, setName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [cellphone, setCellphone] = useState("010");
 
-  const user: Member = {
-    name,
-    email,
-    cellphone,
-  };
+  // const user: Member = {
+  //   name,
+  //   email,
+  //   cellphone,
+  // };
 
-  function handleNameChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setName(e.target.value);
-  }
-  function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setEmail(e.target.value);
-  }
-  function handleCellphoneChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setCellphone(e.target.value);
+  // function handleNameChange(e: React.ChangeEvent<HTMLInputElement>) {
+  //   setName(e.target.value);
+  // }
+  // function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
+  //   setEmail(e.target.value);
+  // }
+  // function handleCellphoneChange(e: React.ChangeEvent<HTMLInputElement>) {
+  //   setCellphone(e.target.value);
+  // }
+
+  const [user, setUser] = useState<Member>({
+    name: "",
+    email: "",
+    cellphone: "010",
+  });
+
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const newUser = {
+      ...user,
+      [event.target.name]: event.target.value,
+    };
+    setUser(newUser);
+    validate({ data: newUser });
   }
 
   const [errors, setErrors] = useState<FormErrors>({});
 
-  function validate() {
-    let newErrors: FormErrors = {};
+  function validate({ criteriaMode = "firstError", data }: ValidateOptions) {
+    const userInfo = data || user;
+
+    const newErrors: FormErrors = {};
 
     // 필수 입력 체크
-    if (user.name.trim() === "") {
-      newErrors = {
-        name: { message: "이름을 입력하세요." },
-      };
-    } else if (user.name.trim().length < 2) {
-      newErrors = {
-        name: { message: "2글자 이상 입력하세요." },
-      };
-    } else if (user.email.trim() === "") {
-      newErrors = {
-        email: { message: "이메일을 입력하세요." },
-      };
-    } else if (emailExp.test(user.email) === false) {
-      newErrors = {
-        email: { message: "이메일 양식에 맞지 않습니다." },
-      };
-    } else if (user.cellphone.trim() === "") {
-      newErrors = {
-        cellphone: { message: "휴대폰 번호를 입력하세요." },
-      };
-    } else if (cellphoneExp.test(user.cellphone) === false) {
-      newErrors = {
-        cellphone: { message: "휴대폰 형식에 맞지 않습니다." },
-      };
+    if (userInfo.name.trim() === "") {
+      newErrors.name = { message: "이름을 입력하세요." };
+      if (criteriaMode === "firstError") {
+        setErrors(newErrors);
+        return;
+      }
+    } else if (userInfo.name.trim().length < 2) {
+      newErrors.name = { message: "2글자 이상 입력하세요." };
+      if (criteriaMode === "firstError") {
+        setErrors(newErrors);
+        return;
+      }
+    }
+
+    if (userInfo.email.trim() === "") {
+      newErrors.email = { message: "이메일을 입력하세요." };
+      if (criteriaMode === "firstError") {
+        setErrors(newErrors);
+        return;
+      }
+    } else if (emailExp.test(userInfo.email) === false) {
+      newErrors.email = { message: "이메일 양식에 맞지 않습니다." };
+      if (criteriaMode === "firstError") {
+        setErrors(newErrors);
+        return;
+      }
+    }
+
+    if (userInfo.cellphone.trim() === "") {
+      newErrors.cellphone = { message: "휴대폰 번호를 입력하세요." };
+      if (criteriaMode === "firstError") {
+        setErrors(newErrors);
+        return;
+      }
+    } else if (cellphoneExp.test(userInfo.cellphone) === false) {
+      newErrors.cellphone = { message: "휴대폰 형식에 맞지 않습니다." };
+      if (criteriaMode === "firstError") {
+        setErrors(newErrors);
+        return;
+      }
     }
 
     setErrors(newErrors);
 
+    return Object.keys(newErrors).length === 0;
+
     // 에러 검증 실패
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      // 입력값 검증 실패
-      console.log("입력값 검증 실패", newErrors);
-    } else {
-      // 입력값 검증 통과
-      console.log("서버에 전송...", user);
-    }
+    //   if (Object.keys(newErrors).length > 0) {
+    //     setErrors(newErrors);
+    //     // 입력값 검증 실패
+    //     return false;
+    //   } else {
+    //     // 입력값 검증 통과
+    //     return true;
+    //   }
   }
 
   function registMember(event: React.FormEvent) {
     event.preventDefault(); // 브라우저의 기본 동작 취소
-    validate();
+    const isValid = validate({
+      // criteriaMode: "firstError", // 첫번째 발견된 에러만 포함
+      criteriaMode: "all", // 모든 에러를 포함
+    });
+    if (isValid) {
+      console.log("서버에 전송", user);
+      setUser({ name: "", email: "", cellphone: "010" });
+    }
   }
 
   return (
@@ -100,7 +147,7 @@ function App() {
           id="name"
           name="name"
           value={user.name}
-          onChange={handleNameChange}
+          onChange={handleChange}
         />
         <br />
         <div className="error-style">{errors.name?.message}</div>
@@ -110,7 +157,7 @@ function App() {
           id="email"
           name="email"
           value={user.email}
-          onChange={handleEmailChange}
+          onChange={handleChange}
         />
         <br />
         <div className="error-style">{errors.email?.message}</div>
@@ -120,7 +167,7 @@ function App() {
           id="cellphone"
           name="cellphone"
           value={user.cellphone}
-          onChange={handleCellphoneChange}
+          onChange={handleChange}
         />
         <br />
         <div className="error-style">{errors.cellphone?.message}</div>
