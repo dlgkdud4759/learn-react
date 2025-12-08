@@ -5,38 +5,53 @@ interface ClickMeProps {
   level: number;
 }
 
+// State의 타입 정의
 interface ClickMeState {
   count: number;
 }
 
-// 클래스 컴포넌트를 만드는 방법
-// 1. Component를 상속 받는다.
 class ClickMe extends Component<ClickMeProps, ClickMeState> {
-  // state/setState() 부모(Component)에 미리 정의되어 있음
-  // state 변수 하나만 사용 가능
-  // 만약 여러 개의 상태를 관리해야 한다면, state를 객체로 만들어야 함
-  state = { count: 0 }; // 상태를 초기화
+  state = { count: 0 };
 
-  // 이벤트 핸들러는 this 바인딩을 위해 화살표 함수로 작성하는 게 편함
-  // increment = () => {
-  //   this.setState({ count: this.state.count + 1 });
-  // };
-
+  // 1-1
   constructor(props: ClickMeProps) {
+    console.log("1 Mounting.");
+    console.log("\t1-1 constructor 호출됨.");
     super(props);
-    // props를 이용해서 state를 초기화 해야 할 경우 constructor에서 수행
-    this.state = { count: props.level };
-
-    // 이벤트 핸들러를 일반 함수로 작성할 경우 this.props, this.state에 접근하기 위해서 this 바인딩이 필요
-    this.increment = this.increment.bind(this);
   }
 
-  increment() {
+  // 1-2
+  static getDerivedStateFromProps(props: ClickMeProps, state: ClickMeState) {
+    console.log("\t1-2 getDerivedStateFromProps 호출됨");
+    console.log("\t\tprops", props);
+    console.log("\t\tstate", state);
+
+    if (state.count / props.level > 10) {
+      return { count: props.level }; // 새로운 값으로 state 대체
+    }
+    return null;
+  }
+
+  increment = () => {
     this.setState({ count: this.state.count + 1 });
+  };
+
+  // 2-2
+  shouldComponentUpdate(nextProps: ClickMeProps, nextState: ClickMeState) {
+    console.log("\t2-2 shouldComponentUpdate 호출됨.");
+    console.log("\t현재값: ", this.props, this.state);
+    console.log("\t다음값: ", nextProps, nextState);
+    // 4의 배수일 때는 렌더링 하지 않음
+    if (nextState.count % 4 === 0) {
+      return false; // render() 호출 X
+    } else {
+      return true; // render() 호출 O
+    }
   }
 
-  // 2. render() 메서드를 작성한다.
+  // 1-3/2-3
   render() {
+    console.log("\t1-3/2-3 render 호출됨.");
     const result = this.state.count * this.props.level;
     return (
       <div>
@@ -44,6 +59,37 @@ class ClickMe extends Component<ClickMeProps, ClickMeState> {
         <button onClick={this.increment}>클릭</button>
       </div>
     );
+  }
+
+  // 1-4
+  componentDidMount() {
+    // API 서버로부터 데이터 가져오는 작업은 이곳에서
+    console.log("\t1-4 componentDidMount 호출됨.");
+  }
+
+  // 2-4
+  getSnapshotBeforeUpdate(prevProps: ClickMeProps, prevState: ClickMeState) {
+    console.log("\t2-4 getSnapshotBeforeUpdate 호출됨.");
+    console.log("\t\t이전값: ", prevProps, prevState);
+    console.log("\t\t현재값: ", this.props, this.state);
+    return "hello";
+  }
+
+  // 2-5
+  componentDidUpdate(
+    prevProps: ClickMeProps,
+    prevState: ClickMeState,
+    snapshot: string
+  ) {
+    console.log("\t2-5 componentDidUpdate 호출됨.");
+    console.log("\t\t이전값: ", prevProps, prevState);
+    console.log("\t\t현재값: ", this.props, this.state);
+    console.log("\t\tsnapshot", snapshot);
+  }
+
+  // 3-1
+  componentWillUnmount(): void {
+    console.log("\t3-1 componentWillUnmount 호출됨.");
   }
 }
 
