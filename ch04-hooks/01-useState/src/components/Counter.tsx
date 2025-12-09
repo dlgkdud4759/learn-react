@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "./Button";
 
 interface CounterProps {
   children: string;
@@ -40,15 +41,15 @@ function Counter({ children }: CounterProps) {
           value={step}
           onChange={(e) => setStep(Number(e.target.value))}
         />
-        <button type="button" onClick={handleDown}>
+        <Button bgColor="red" onClick={handleDown}>
           -_-
-        </button>
-        <button type="button" onClick={handleReset}>
+        </Button>
+        <Button bgColor="gray" onClick={handleReset}>
           0_0
-        </button>
-        <button type="button" onClick={handleUp}>
+        </Button>
+        <Button bgColor="blue" onClick={handleUp}>
           +_+
-        </button>
+        </Button>
         <span>{count}</span>
       </div>
     </>
