@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 
 interface CounterProps {
@@ -27,9 +27,45 @@ function Counter({ children }: CounterProps) {
     setCount(initCount);
   };
 
-  // const handleChangeStep = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setStep(Number(e.target.value))
-  // }
+  // 1초 후에 handleUp()을 호출해서 자동으로 값을 1회 증가
+  // setup
+  // useEffect(() => {
+  //   console.log("\t\tCounter 마운트됨");
+  //   setTimeout(() => {
+  //     handleUp();
+  //   }, 1000);
+  //   console.log(
+  //     "dependencies에 빈 배열을 지정하면 마운트된 후에 한번만 호출됨"
+  //   );
+  // }, []);
+
+  // 증감치(step)가 수정되면 1초 후에 handleUp()을 호출해서 자동으로 값을 1회 증가
+  useEffect(() => {
+    console.log("\t\tCounter 마운트됨");
+    setTimeout(() => {
+      handleUp();
+    }, 1000);
+    console.log(
+      "dependencies를 지정하면, 컴포넌트가 업데이트 될 때 지정한 값들 중에 하나라도 수정되었을 경우 호출됨"
+    );
+  }, [step]);
+
+  // 1초마다 handleUp()을 호출해서 자동으로 값을 계속 증가
+  // useEffect(() => {
+  //   console.log("\t\tCounter 마운트 또는 업데이트 됨");
+  //   const timerId = setInterval(() => {
+  //     handleUp();
+  //   }, 1000);
+  //   console.log(
+  //     "dependencies에 빈 배열을 지정하면 마운트된 후에 한번만 호출됨"
+  //   );
+
+  //   // cleanup
+  //   return () => {
+  //     console.log("\t\tcleanup 호출", timerId);
+  //     clearInterval(timerId);
+  //   };
+  // });
 
   return (
     <>
