@@ -1,5 +1,5 @@
-import { useState } from "react";
 import Button from "./Button";
+import useCounter from "@/hooks/useCounter";
 
 interface CounterProps {
   children: string;
@@ -9,23 +9,9 @@ function Counter({ children }: CounterProps) {
   console.log("\tCounter 호출됨.");
 
   const initCount = Number(children);
-  const [count, setCount] = useState(initCount);
-  const [step, setStep] = useState(1);
 
-  // 카운트 감소
-  const handleDown = () => {
-    setCount(count - step);
-  };
-
-  // 카운트 증가
-  const handleUp = () => {
-    setCount(count + step);
-  };
-
-  // 카운트 초기화
-  const handleReset = () => {
-    setCount(initCount);
-  };
+  const { count, step, handleStepChange, handleDown, handleUp, handleReset } =
+    useCounter(initCount);
 
   // const handleChangeStep = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   setStep(Number(e.target.value))
@@ -39,7 +25,7 @@ function Counter({ children }: CounterProps) {
           id="step"
           type="number"
           value={step}
-          onChange={(e) => setStep(Number(e.target.value))}
+          onChange={(e) => handleStepChange(Number(e.target.value))}
         />
         <Button bgColor="red" onClick={handleDown}>
           -_-
