@@ -1,9 +1,9 @@
-import useFetch from "@/hooks/useFetch";
+import useAxios from "@/hooks/useAxios";
 import type { TodoListRes } from "@/types/todo";
 import { ClipLoader } from "react-spinners";
 
 function TodoList() {
-  const { data, error, loading } = useFetch<TodoListRes>({ url: "/todolist" });
+  const { data, error, loading } = useAxios<TodoListRes>({ url: "/todolist" });
   const list = data?.items.map((item) => (
     <li key={item._id}>
       <a href={`/${item._id}`}>{item.title}</a>
