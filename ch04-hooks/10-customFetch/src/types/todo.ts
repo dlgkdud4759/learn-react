@@ -27,4 +27,4 @@ export interface ErrorRes {
 }
 
 // 서버의 응답
-export type ResData = TodoListRes | ErrorRes;
+export type ResData<T extends TodoListRes | TodoInfoRes> = T | ErrorRes;
