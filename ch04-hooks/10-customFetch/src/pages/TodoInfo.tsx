@@ -1,5 +1,6 @@
 import useFetch from "@/hooks/useFetch";
 import type { TodoInfoRes } from "@/types/todo";
+import { ClipLoader } from "react-spinners";
 
 function TodoInfo() {
   const id = window.location.pathname.split("/").pop();
@@ -14,7 +15,14 @@ function TodoInfo() {
       <h2>할일 상세 조회</h2>
 
       {/* <!-- 로딩중일 때 로딩중 메시지 표시 --> */}
-      {loading && <p>로딩중...</p>}
+      {loading && (
+        <ClipLoader
+          color="blue"
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      )}
 
       {/* <!-- 에러가 있을 경우 빨간색으로 에러 메시지 표시 --> */}
       {error && <p style={{ color: "red" }}>{error.message}</p>}
