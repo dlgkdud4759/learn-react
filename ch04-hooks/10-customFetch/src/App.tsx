@@ -6,6 +6,7 @@ function App() {
 
   return (
     <>
+      {/* {id ? <TodoInfo/> : <TodoList/> } */}
       {!id && <TodoList />}
       {id && <TodoInfo />}
     </>
