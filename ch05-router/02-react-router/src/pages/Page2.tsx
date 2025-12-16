@@ -1,5 +1,5 @@
 import Header from "@components/Header";
-import MyLink from "@components/MyLink";
+import { Link } from "react-router";
 
 function Page2() {
   console.log("Page2 렌더링");
@@ -7,7 +7,7 @@ function Page2() {
     <>
       <Header />
       <h2>SPA Page2</h2>
-      <MyLink to="home">홈으로</MyLink>
+      <Link to="/home">홈으로</Link>
     </>
   );
 }

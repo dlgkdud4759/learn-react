@@ -1,21 +1,21 @@
-import MyLink from "./MyLink";
+import { Link } from "react-router";
 
 function Header() {
   return (
     <>
       <header>
-        <h1>리액트 라우터 - 01 클라이언트 라우팅 직접 구현 - SPA</h1>
-        <MyLink className="menu-dark" to="home">
+        <h1>리액트 라우터 - 02 react-router 사용</h1>
+        <Link className="menu-dark" to="/home">
           home
-        </MyLink>
+        </Link>
         <br />
-        <MyLink className="menu" to="page1">
+        <Link className="menu" to="/page1">
           page1
-        </MyLink>
+        </Link>
         <br />
-        <MyLink className="menu" to="page2">
+        <Link className="menu" to="/page2">
           page2
-        </MyLink>
+        </Link>
       </header>
     </>
   );
