@@ -7,7 +7,7 @@ function Header() {
         <h1>리액트 라우터 - 02 react-router 사용</h1>
         <NavLink
           className={({ isActive }) => (isActive ? "menu-dark" : "menu")}
-          to="/home"
+          to="/"
         >
           home
         </NavLink>
