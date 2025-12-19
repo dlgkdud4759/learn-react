@@ -3,8 +3,14 @@ import type { LoaderFunctionArgs } from "react-router";
 
 export async function todoListLoader({ request }: LoaderFunctionArgs) {
   console.log(request.url);
+  const url = new URL(request.url);
+  const searchParams = url.searchParams;
+  const page = searchParams.get("page") || "1";
+  const limit = searchParams.get("limit") || "10";
+  const keyword = searchParams.get("keyword") || "";
+
   try {
-    return getTodoList();
+    return getTodoList({ page, limit, keyword });
   } catch (err) {
     if (err instanceof Response) throw err; // errElement에서 처리할 4xx, 5xx 에러
     throw new Error(
