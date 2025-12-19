@@ -51,7 +51,7 @@ export async function createTodo(
 
 // 할일 수정
 export async function updateTodo(
-  _id: number,
+  _id: string,
   formData: FormData
 ): Promise<ResData<TodoInfoRes>> {
   // https://github.com/FEBC-15/js/blob/main/docs/09.js_ajax.md#52-fetchresource-options
@@ -75,7 +75,7 @@ export async function updateTodo(
 }
 
 // 할일 삭제
-export async function deleteTodo(_id: number): Promise<ResData<TodoInfoRes>> {
+export async function deleteTodo(_id: string): Promise<ResData<TodoInfoRes>> {
   const res = await fetch(`${API_URL}/todolist/${_id}`, {
     method: "DELETE",
   });
