@@ -19,6 +19,7 @@ const router = createBrowserRouter([
     path: "/todo",
     element: <Layout />,
     errorElement: <ErrorPage />,
+    hydrateFallbackElement: <div>서버 응답 대기중 ...</div>,
     children: [
       { index: true, element: <TodoList /> }, // index 라우트: URL이 부모 라우트의 URL 까지만 일치할 경우 기본으로 렌더링 될 자식 라우트 지정
       { path: "list", loader: todoListLoader, element: <TodoList /> },
