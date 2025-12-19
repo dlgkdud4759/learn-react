@@ -17,6 +17,7 @@ function TodoInfo() {
 
   const infoMatch = useMatch("/todo/list/:_id"); // 동적 세그먼트 지정 가능
 
+  // loader에서 반환한 값
   const data = useLoaderData<ResData<TodoInfoRes>>();
 
   // 요청된 URL 정보를 담고 있는 location 객체 반환

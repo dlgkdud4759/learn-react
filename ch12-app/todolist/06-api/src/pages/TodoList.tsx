@@ -31,6 +31,7 @@ function TodoList() {
   //   <TodoListItem key={item._id} item={item} />
   // ));
 
+  // loader에서 반환한 값
   const data = useLoaderData<ResData<TodoListRes>>();
   const list = data.ok ? (
     data.items.map((item) => <TodoListItem key={item._id} item={item} />)
