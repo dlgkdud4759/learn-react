@@ -1,5 +1,7 @@
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import TodoListItem from "./TodoListItem";
+import { useState } from "react";
+import Pagination from "./Pagination";
 
 const dummyData = {
   items: [
@@ -23,6 +25,23 @@ const dummyData = {
 };
 
 function TodoList() {
+  console.log("TodoList 렌더링");
+
+  // url의 쿼리스트링 관리
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // 검색어 저장
+  const [keyword, setKeyword] = useState("");
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // 브라우저 기본 동작 취소(form의 submit 취소)
+
+    if (keyword.trim().length > 1) {
+      searchParams.set("keyword", keyword);
+      setSearchParams(searchParams);
+    }
+  };
+
   const data = dummyData;
 
   const list = data.items.map((item) => (
@@ -35,11 +54,19 @@ function TodoList() {
         <div className="todo">
           <Link to="/todo/add">추가</Link>
           <br />
-          <form className="search">
-            <input type="text" autoFocus />
+          <form className="search" onSubmit={handleSearch}>
+            <input
+              type="text"
+              name="keyword"
+              autoFocus
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
             <button type="submit">검색</button>
           </form>
           <ul className="todolist">{list}</ul>
+
+          <Pagination />
         </div>
       </div>
     </>
