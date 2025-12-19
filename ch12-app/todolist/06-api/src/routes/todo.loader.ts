@@ -1,0 +1,26 @@
+import { getTodoInfo, getTodoList } from "@/api/todo";
+import type { LoaderFunctionArgs } from "react-router";
+
+export async function todoListLoader({ request }: LoaderFunctionArgs) {
+  console.log(request.url);
+  try {
+    return getTodoList();
+  } catch (err) {
+    if (err instanceof Response) throw err; // errElement에서 처리할 4xx, 5xx 에러
+    throw new Error(
+      "일시적인 네트워크 문제가 발생했습니다. \n 잠시 후 다시 시도하세요."
+    );
+  }
+}
+
+// react-router의 loader에서 사용할 상세 조회 함수
+export async function todoInfoLoader({ params }: LoaderFunctionArgs) {
+  try {
+    return getTodoInfo(params._id!);
+  } catch (err) {
+    if (err instanceof Response) throw err; // errElement에서 처리할 4xx, 5xx 에러
+    throw new Error(
+      "일시적인 네트워크 문제가 발생했습니다. \n 잠시 후 다시 시도하세요."
+    );
+  }
+}
