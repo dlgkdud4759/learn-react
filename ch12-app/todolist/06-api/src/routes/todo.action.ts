@@ -1,11 +1,13 @@
 import { createTodo, deleteTodo, updateTodo } from "@/api/todo";
-import type { ActionFunctionArgs } from "react-router";
+import { redirect, type ActionFunctionArgs } from "react-router";
 
 // react-router의 action에서 사용할 등록 함수
 export async function todoCreateAction({ request }: ActionFunctionArgs) {
   try {
     const formData = await request.formData();
-    return createTodo(formData);
+    await createTodo(formData);
+
+    return redirect(`/todo/list`); // 페이지 이동에 사용
   } catch (err) {
     if (err instanceof Response) throw err; // errElement에서 처리할 4xx, 5xx 에러
     throw new Error(
@@ -21,7 +23,9 @@ export async function todoUpdateAction({
 }: ActionFunctionArgs) {
   try {
     const formData = await request.formData();
-    return updateTodo(params._id!, formData);
+    await updateTodo(params._id!, formData);
+
+    return redirect(`/todo/list/${params._id}`);
   } catch (err) {
     if (err instanceof Response) throw err; // errElement에서 처리할 4xx, 5xx 에러
     throw new Error(
