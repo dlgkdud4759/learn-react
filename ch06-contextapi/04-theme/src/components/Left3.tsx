@@ -1,22 +1,34 @@
 import CounterContext from "@/contexts/CounterContext";
+import ThemeContext from "@/contexts/ThemeContext";
 import { use, useEffect } from "react";
 
-function Left3({ showcounter = true }) {
+function Left3() {
   useEffect(() => {
     console.log("#### Left3 렌더링.");
   });
 
-  let counter = null;
-
   // context 사용하기
-  // use를 이용하면 조건부로 컨텍스트 구독이 가능하므로 불필요한 리렌더링 방지
-  if (showcounter) {
-    counter = use(CounterContext);
-  }
+  const { count } = use(CounterContext); // React 19에 추가
+
+  // TODO 4. ThemeContext 사용하기(theme)
+  const { theme } = use(ThemeContext);
+
   return (
     <div>
-      <h3>Left3</h3>
-      <span>{counter?.count}</span>
+      {/* 라이트 모드에서는 숫자를, 다크 모드에서는 숫자만큼 별을 보여줌 */}
+      {theme === "light" && (
+        <>
+          <h3>Left3</h3>
+          <span>{count}</span>
+        </>
+      )}
+
+      {theme === "dark" && (
+        <>
+          <h3>Left3 {" - 💫"}</h3>
+          <span>{new Array(count).fill("💫")}</span>
+        </>
+      )}
     </div>
   );
 }

@@ -8,7 +8,13 @@ interface CounterContextType {
 }
 
 // 1. Context 객체 생성
-const CounterContext = createContext<CounterContextType | null>(null);
+// const CounterContext = createContext<CounterContextType | null>(null);
+const CounterContext = createContext<CounterContextType>({
+  count: 0,
+  countUp: () => {},
+  countDown: () => {},
+  reset: () => {},
+});
 
 // 2. Provider 컴포넌트 생성 및 export
 export function CounterProvider({ children }: { children: React.ReactNode }) {
@@ -23,7 +29,11 @@ export function CounterProvider({ children }: { children: React.ReactNode }) {
   };
 
   const countDown = (step: number) => {
-    setCount(count - step);
+    let newCount = count - step;
+    if (newCount < 0) {
+      newCount = 0;
+    }
+    setCount(newCount);
   };
 
   const context = { count, countUp, reset, countDown };
