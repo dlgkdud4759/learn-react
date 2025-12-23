@@ -1,7 +1,7 @@
 import CounterContext from "@/contexts/CounterContext";
 import { useContext, useEffect } from "react";
 
-function Left3() {
+function Left3({ showCounter = true }) {
   useEffect(() => {
     console.log("#### Left3 렌더링.");
   });
@@ -12,7 +12,8 @@ function Left3() {
   return (
     <div>
       <h3>Left3</h3>
-      <span>{counter?.count}</span>
+      {/* 조건부로 참조하지만 Context 값이 변경되면 항상 리렌더링 발생(showCounter와 무관)  */}
+      <span>{showCounter && counter?.count}</span>
     </div>
   );
 }
