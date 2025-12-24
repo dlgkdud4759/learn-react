@@ -1,14 +1,22 @@
-import Left3 from '@components/Left3';
-import { useEffect } from 'react';
+import { countAtom, dadadoubleCountAtom, doubleCountAtom } from "@/jotai/atoms";
+import Left3 from "@components/Left3";
+import { useAtomValue } from "jotai";
+import { useEffect } from "react";
 
 function Left2() {
-  useEffect(()=>{
-    console.log('### Left2 렌더링.');
+  useEffect(() => {
+    console.log("### Left2 렌더링.");
   });
+
+  const count = useAtomValue(countAtom);
+  const doubleCount = useAtomValue(doubleCountAtom);
+  const dadadoubleCount = useAtomValue(dadadoubleCountAtom);
   return (
     <div>
       <h2>Left2</h2>
-      <Left3 />
+      <Left3 title="countAtom" count={count} />
+      <Left3 title="doubleCountAtom" count={doubleCount} />
+      <Left3 title="dadadoubleCountAtom" count={dadadoubleCount} />
     </div>
   );
 }
