@@ -6,10 +6,10 @@ function App() {
       <h1>03 Styled Components</h1>
 
       <Button>그냥 버튼</Button>
-      <Button type="reset" $bg="red" $color="white">
+      <Button type="reset" variant="cancel">
         취소 버튼
       </Button>
-      <Button type="submit" $bg="blue" $color="white">
+      <Button type="submit" variant="confirm">
         submit 버튼
       </Button>
     </>
