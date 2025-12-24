@@ -1,5 +1,5 @@
 /* App 컴포넌트 스타일 */
-.container {
+.App--container {
   width: 100%;
   margin: 10px 0;
   display: flex;
@@ -8,7 +8,7 @@
   flex-wrap: wrap;
 }
 
-.bg-gray-text-blue {
+.App-bg-gray-text-blue {
   background-color: darkgray;
   color: lightblue;
 }
