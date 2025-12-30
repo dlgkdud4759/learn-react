@@ -4,8 +4,10 @@ import type {
   BoardInfoRes,
   ResData,
 } from "@/types/board";
-import axios from "axios";
+import { getAxiosInstance } from "@/utils/axiosInstance";
 import { useEffect, useState } from "react";
+
+const axiosInstance = getAxiosInstance();
 
 function BoardInfo() {
   // data, error, isLoading 상태 관리
@@ -19,28 +21,21 @@ function BoardInfo() {
     // client-id: 'openmarket'
     try {
       setIsLoading(true);
-      const response = await axios.get<ResData<BoardInfoRes>>(
-        "https://fesp-api.koyeb.app/market/posts/1",
-        {
-          headers: {
-            "Client-Id": "openmarket",
-          },
-        }
+      const response = await axiosInstance.get<ResData<BoardInfoRes>>(
+        "/posts/1"
       );
+      const jsonBody = response.data;
 
-      console.log("respons", response);
-      console.log("jsonBody", response.data);
-
-      if (response.data.ok) {
+      if (jsonBody.ok) {
         // 서버의 응답 상태코드가 2xx일 경우 ok는 true가 됨
-        setData(response.data.item);
+        setData(jsonBody.item);
         setError(null);
       } else {
         // 서버의 응답 상태코드가 4xx, 5xx일 경우 ok는 false가 됨
         // const err = new Error(jsonBody.message);
         // setError(err);
         // setData(null);
-        throw new Error(response.data.message);
+        throw new Error(jsonBody.message);
       }
     } catch (err) {
       // 네트워크 문제일 경우
