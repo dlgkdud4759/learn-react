@@ -1,58 +1,26 @@
-import type { BoardReplyCreateRes, ResData } from "@/types/board";
+import type { BoardReplyCreateRes } from "@/types/board";
 import { getAxiosInstance } from "@/utils/axiosInstance";
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 
-function CommentNew({ reload }: { reload: () => void }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+const axiosInstance = getAxiosInstance();
 
-  const axiosInstance = getAxiosInstance();
-
-  const requestAddComment = async (formData: FormData) => {
-    // 4. API 서버에 댓글 등록을 axios 라이브러리로 요청을 보낸다.
-    // API 참고: https://fesp-api.koyeb.app/market/apidocs/#/게시판/post_posts___id__replies
-    // client-id: 'openmarket'
-    try {
-      setIsLoading(true);
-
-      const response = await axiosInstance.post<ResData<BoardReplyCreateRes>>(
-        "/posts/1/replies",
-        formData
-      );
-      const jsonData = response.data;
-
-      if (jsonData.ok) {
-        // 등록 성공
-        console.log("등록 성공");
-        // 댓글 목록 다시 조회
-        reload();
-        return true;
-      } else {
-        if (jsonData.errors) {
-          throw new Error(jsonData.errors.content.msg);
-        }
-        throw new Error(jsonData.message);
-      }
-    } catch (err) {
-      // 네트워크 문제일 경우
-      setError(err as Error);
-      return false;
-    } finally {
-      // try, catch 블럭이 실행된 후 호출
-      setIsLoading(false);
-    }
-  };
+function CommentNew() {
+  // data, error, isLoading 상태 관리
+  const { mutate: requestAddComment } = useMutation({
+    mutationFn: (formData: FormData) =>
+      axiosInstance.post<BoardReplyCreateRes>("/posts/3/replies", formData),
+  });
 
   // 등록 버튼 누르면 댓글 등록 요청
   const handleAddComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // submit 기본 동작 취소
     const formElem = event.currentTarget;
     const formData = new FormData(formElem);
-    const result = await requestAddComment(formData);
-    if (result) {
-      // 등록에 성공했을 경우
-      formElem.reset();
-    }
+    requestAddComment(formData, {
+      onSuccess: () => {
+        formElem.reset();
+      },
+    });
   };
 
   return (
@@ -66,10 +34,7 @@ function CommentNew({ reload }: { reload: () => void }) {
           name="content"
         ></textarea>
         <br />
-        <button type="submit" disabled={isLoading}>
-          등록
-        </button>
-        {error && <span>{error.message}</span>}
+        <button type="submit">등록</button>
       </form>
     </>
   );

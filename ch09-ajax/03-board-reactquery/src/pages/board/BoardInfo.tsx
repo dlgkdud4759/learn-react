@@ -1,55 +1,17 @@
 import CommentList from "@/pages/board/CommentList";
-import type {
-  BoardInfo as BoardInfoType,
-  BoardInfoRes,
-  ResData,
-} from "@/types/board";
+import type { BoardInfoRes } from "@/types/board";
 import { getAxiosInstance } from "@/utils/axiosInstance";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 const axiosInstance = getAxiosInstance();
 
 function BoardInfo() {
   // data, error, isLoading 상태 관리
-  const [data, setData] = useState<BoardInfoType | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  const requestInfo = async () => {
-    // 2. API 서버에 1번 게시물의 상세정보를 axios 라이브러리로 요청을 보낸다.
-    // API 참고: https://fesp-api.koyeb.app/market/apidocs/#/게시판/get_posts___id_
-    // client-id: 'openmarket'
-    try {
-      setIsLoading(true);
-      const response = await axiosInstance.get<ResData<BoardInfoRes>>(
-        "/posts/1"
-      );
-      const jsonBody = response.data;
-
-      if (jsonBody.ok) {
-        // 서버의 응답 상태코드가 2xx일 경우 ok는 true가 됨
-        setData(jsonBody.item);
-        setError(null);
-      } else {
-        // 서버의 응답 상태코드가 4xx, 5xx일 경우 ok는 false가 됨
-        // const err = new Error(jsonBody.message);
-        // setError(err);
-        // setData(null);
-        throw new Error(jsonBody.message);
-      }
-    } catch (err) {
-      // 네트워크 문제일 경우
-      setError(err as Error);
-      setData(null);
-    } finally {
-      // try, catch 블럭이 실행된 후 호출
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    requestInfo();
-  }, []); // 마운트 후에 한번만 setup 함수가 호출됨
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["posts", "3"],
+    queryFn: () => axiosInstance.get<BoardInfoRes>("/posts/3"),
+    select: (response) => response.data.item,
+  });
 
   return (
     <>
