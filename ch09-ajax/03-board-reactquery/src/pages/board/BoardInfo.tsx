@@ -5,11 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 
 const axiosInstance = getAxiosInstance();
 
-function BoardInfo() {
+function BoardInfo({ postId }: { postId: number }) {
   // data, error, isLoading 상태 관리
   const { data, isLoading, error } = useQuery({
-    queryKey: ["posts", "3"],
-    queryFn: () => axiosInstance.get<BoardInfoRes>("/posts/3"),
+    queryKey: ["posts", postId],
+    queryFn: () => axiosInstance.get<BoardInfoRes>(`/posts/${postId}`),
     select: (response) => response.data.item,
   });
 
@@ -35,7 +35,7 @@ function BoardInfo() {
         </>
       )}
 
-      <CommentList />
+      <CommentList postId={postId} />
     </>
   );
 }
