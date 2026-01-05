@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   description: "Welcome to the home page",
 };
 
-export default function RootPage() {
-  return <h1>Home</h1>;
+export default function LoginPage() {
+  return <h1>로그인</h1>;
 }
