@@ -1,7 +1,8 @@
 import axios from "axios";
-import { Suspense, use } from "react";
+import { Suspense } from "react";
 import type { BoardListRes } from "@/types/board";
-import FetchAsYouRender from "./FetchAsYouRender";
+import FetchAsYouRender from "@/FetchAsYouRender";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 // 게시물 목록 조회
 function fetchList() {
@@ -17,14 +18,16 @@ function fetchList() {
     .then((res) => res.data.item);
 }
 
-const listPromise = fetchList();
-
 function PostList() {
-  const data = use(listPromise);
+  const { data } = useSuspenseQuery({
+    queryKey: ["posts"],
+    queryFn: fetchList,
+  });
 
   return (
     <>
       <h2>게시물 {data.length}건.</h2>
+      <hr />
       <Suspense fallback={<div>1번 게시물 로딩중...</div>}>
         <FetchAsYouRender />
       </Suspense>
