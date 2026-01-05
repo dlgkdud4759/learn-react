@@ -1,4 +1,5 @@
-import "@/globals.css";
+import "./globals.css";
+import Link from "next/link";
 
 export default function RootLayout({
   children,
@@ -10,29 +11,29 @@ export default function RootLayout({
           <nav>
             <ul className="flex space-x-4">
               <li>
-                <a href="/" className={`hover:underline`}>
+                <Link href="/" className={`hover:underline`}>
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/about" className={`hover:underline`}>
+                <Link href="/about" className={`hover:underline`}>
                   About
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/posts" className={`hover:underline`}>
+                <Link href="/posts" className={`hover:underline`}>
                   게시판
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/user/login" className={`hover:underline`}>
+                <Link href="/user/login" className={`hover:underline`}>
                   로그인
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/user/signup" className={`hover:underline`}>
+                <Link href="/user/signup" className={`hover:underline`}>
                   회원가입
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

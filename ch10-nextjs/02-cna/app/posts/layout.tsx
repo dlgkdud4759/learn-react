@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -6,17 +8,17 @@ export default function RootLayout({
       <aside className="w-48 bg-gray-800 text-white p-4 lg:w-64">
         <ul className="space-y-2">
           <li>
-            <a href="/posts" className="block hover:bg-gray-700 p-2 rounded">
+            <Link href="/posts" className="block hover:bg-gray-700 p-2 rounded">
               목록 조회
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               href="/posts/new"
               className="block hover:bg-gray-700 p-2 rounded"
             >
               글쓰기
-            </a>
+            </Link>
           </li>
         </ul>
       </aside>
