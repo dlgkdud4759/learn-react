@@ -11,7 +11,11 @@ export default function RootLayout({
 }>) {
   // 현재 URL 경로를 추출('/posts', '/user/login')
   const pathname = usePathname();
-  const isActive = (path: string) => (path === pathname ? "cs-active" : "");
+  // 특정 링크 경로와 정확히 일치하거나 해당 경로의 하위 경로일 때 active 처리
+  // pathname과 path가 같거나 pathname이 path로 시작하면 active 클래스 반환
+  // Link 컴포넌트에서 넘겨준 path 매개변수를 기준으로만 적용됨
+  const isActive = (path: string) =>
+    pathname === path || pathname.startsWith(`${path}/`) ? "cs-active" : "";
 
   return (
     <html lang="ko">
