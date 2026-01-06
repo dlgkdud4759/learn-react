@@ -46,16 +46,16 @@ export default function RootLayout({
               </li>
               <li>
                 <Link
-                  href="/user/login"
-                  className={`hover:underline ${isActive("/user/login")}`}
+                  href="/login"
+                  className={`hover:underline ${isActive("/login")}`}
                 >
                   로그인
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/user/signup"
-                  className={`hover:underline ${isActive("/user/signup")}`}
+                  href="/signup"
+                  className={`hover:underline ${isActive("/signup")}`}
                 >
                   회원가입
                 </Link>

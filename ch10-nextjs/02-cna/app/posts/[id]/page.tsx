@@ -20,6 +20,14 @@ export async function generateMetadata({
   };
 }
 
+// generateStaticParams 함수가 반환한 배열 만큼 PostInfo 함수를 빌드 시점에 미리 호출함
+// .next/server/app/posts/1.html, 2.html 파일을 정적으로 미리 생성함
+export function generateStaticParams() {
+  // 사전에 생성할 동적 경로 목록 반환
+  const paramsList = [{ id: "1" }, { id: "2" }];
+  return paramsList;
+}
+
 // 동적 세그먼트의 값을 꺼낼 때 params prop을 사용
 export default async function PostInfo({
   params,
@@ -27,5 +35,6 @@ export default async function PostInfo({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  console.log(id, "게시물 조회함");
   return <h1>{id}번 게시글 상세 조회</h1>;
 }
