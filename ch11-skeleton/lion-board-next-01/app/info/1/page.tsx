@@ -1,6 +1,5 @@
 import Link from "next/link";
-import CommentItem from "./CommentItem";
-import CommentNew from "./CommentNew";
+import CommentList from "./CommentList";
 
 export default async function InfoPage() {
   return (
@@ -47,14 +46,7 @@ export default async function InfoPage() {
         </form>
       </section>
 
-      <section className="mb-8">
-        <h4 className="mt-8 mb-4 ml-2">댓글 2개</h4>
-
-        <CommentItem />
-        <CommentItem />
-
-        <CommentNew />
-      </section>
+      <CommentList />
     </main>
   );
 }
