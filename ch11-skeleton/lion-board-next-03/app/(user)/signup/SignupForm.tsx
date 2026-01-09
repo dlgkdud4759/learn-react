@@ -2,7 +2,7 @@
 
 import { createUser } from "@/actions/user";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 
 export default function SignupForm() {
