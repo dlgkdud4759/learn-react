@@ -1,5 +1,26 @@
 import Link from "next/link";
 import CommentList from "@/app/[boardType]/[_id]/CommentList";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ boardType: string; _id: string }>;
+}): Promise<Metadata> {
+  const { boardType, _id } = await params;
+  return {
+    title: `${boardType} - React란?`,
+    description: `${boardType} - React는 UI를 구성하기 위한 JavaScript 라이브러리로...`,
+    openGraph: {
+      title: `${boardType} - React란?`,
+      description: `${boardType} - React는 UI를 구성하기 위한 JavaScript 라이브러리로...`,
+      url: `/${boardType}/${_id}`,
+      images: {
+        url: "/imges/front-end.png",
+      },
+    },
+  };
+}
 
 export default async function InfoPage({
   params,

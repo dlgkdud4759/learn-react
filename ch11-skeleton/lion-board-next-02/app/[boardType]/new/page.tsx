@@ -1,4 +1,25 @@
+import { Metadata } from "next";
 import Link from "next/link";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ boardType: string }>;
+}): Promise<Metadata> {
+  const { boardType } = await params;
+  return {
+    title: `${boardType} - 게시글 등록`,
+    description: `${boardType} - 게시글을 등록하세요.`,
+    openGraph: {
+      title: `${boardType} - 게시글 등록`,
+      description: `${boardType} - 게시글을 등록하세요.`,
+      url: `/${boardType}/new`,
+      images: {
+        url: "/images/front-end.png",
+      },
+    },
+  };
+}
 
 export default async function NewPage({
   params,
