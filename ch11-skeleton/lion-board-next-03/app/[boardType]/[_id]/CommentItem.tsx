@@ -1,7 +1,8 @@
+import { Reply } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function CommentItem() {
+export default function CommentItem({ reply }: { reply: Reply }) {
   return (
     <div className="shadow-md rounded-lg p-4 mb-4">
       <div className="flex justify-between items-center mb-2">
@@ -10,19 +11,19 @@ export default function CommentItem() {
             className="w-8 h-8 mr-2 rounded-full"
             width="32"
             height="32"
-            src="https://res.cloudinary.com/ddedslqvv/image/upload/v1767106161/user-apeach_ol8y1n.png"
-            alt="어피치 프로필 이미지"
+            src={reply.user.image || "/images/favicon.svg"}
+            alt={reply.user.name || "프로필 이미지"}
           />
           <Link href="" className="text-orange-400">
-            어피치
+            {reply.user.name}
           </Link>
         </div>
-        <time className="text-gray-500" dateTime="2026.01.05 14:11:22">
-          2026.01.05 14:11:22
+        <time className="text-gray-500" dateTime={reply.createdAt}>
+          {reply.createdAt}
         </time>
       </div>
       <div className="flex justify-between items-start mb-2">
-        <p className="whitespace-pre-wrap text-sm flex-1">아는 내용이구만...</p>
+        <p className="whitespace-pre-wrap text-sm flex-1">{reply.content}</p>
         <form action="#" className="inline ml-2">
           <button
             type="submit"

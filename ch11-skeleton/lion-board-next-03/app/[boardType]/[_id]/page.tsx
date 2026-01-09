@@ -76,7 +76,7 @@ export default async function InfoPage({
         </form>
       </section>
 
-      <CommentList />
+      <CommentList _id={_id} />
     </main>
   );
 }
