@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ListItem from "@/app/[boardType]/ListItem";
 import { Metadata } from "next";
+import { getPosts } from "@/lib/post";
 
 export async function generateMetadata({
   params,
@@ -8,6 +9,7 @@ export async function generateMetadata({
   params: Promise<{ boardType: string }>;
 }): Promise<Metadata> {
   const { boardType } = await params;
+
   return {
     title: `${boardType} - 라이언 보드`,
     description: `${boardType} 게시판입니다.`,
@@ -28,6 +30,7 @@ export default async function ListPage({
   params: Promise<{ boardType: string }>;
 }) {
   const { boardType } = await params;
+  const res = await getPosts(boardType);
 
   // 게시판 타입에 따른 제목 설정
   let boardTitle = "";
@@ -99,8 +102,19 @@ export default async function ListPage({
             </tr>
           </thead>
           <tbody>
-            <ListItem boardType={boardType} />
-            <ListItem boardType={boardType} />
+            {res.ok ? (
+              res.item.map((post) => (
+                <ListItem key={post._id} boardType={boardType} post={post} />
+              ))
+            ) : (
+              <tr>
+                <td colSpan={6} className="text-center py-8">
+                  <p className="text-red-500 dark:text-red-400">
+                    {res.message}
+                  </p>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
         <hr />
