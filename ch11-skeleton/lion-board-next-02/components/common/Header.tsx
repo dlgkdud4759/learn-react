@@ -14,7 +14,7 @@ export default function Header() {
               height="24"
               alt="로고 이미지"
             />
-            <span className="text-lg font-bold">라이언 보드</span>
+            <span className="text-lg font-bold">라이언 보드 v.02</span>
           </Link>
         </div>
         <div className="w-auto order-2 text-base mt-4 md:mt-0">
@@ -23,10 +23,10 @@ export default function Header() {
               <Link href="/info">정보공유</Link>
             </li>
             <li className="hover:text-amber-500 hover:font-semibold">
-              <Link href="/info">자유게시판</Link>
+              <Link href="/free">자유게시판</Link>
             </li>
             <li className="hover:text-amber-500 hover:font-semibold">
-              <Link href="/info">질문게시판</Link>
+              <Link href="/qna">질문게시판</Link>
             </li>
           </ul>
         </div>
@@ -37,6 +37,8 @@ export default function Header() {
               <Image
                 className="w-8 rounded-full mr-2"
                 src="https://res.cloudinary.com/ddedslqvv/image/upload/v1767106161/user-jayg_i3nudk.webp"
+                width={24}
+                height={24}
                 alt="용쌤 프로필 이미지"
               />
               용쌤님

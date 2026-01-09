@@ -1,6 +1,12 @@
 import Link from "next/link";
 
-export default async function NewPage() {
+export default async function NewPage({
+  params,
+}: {
+  params: Promise<{ boardType: string }>;
+}) {
+  const { boardType } = await params;
+
   return (
     <main className="flex-1 min-w-[320px] p-4">
       <div className="text-center py-4">
@@ -9,7 +15,7 @@ export default async function NewPage() {
         </h2>
       </div>
       <section className="mb-8 p-4">
-        <form action="/info/1">
+        <form action={`/${boardType}`}>
           <div className="my-4">
             <label className="block text-lg content-center" htmlFor="title">
               제목
@@ -49,7 +55,7 @@ export default async function NewPage() {
               등록
             </button>
             <Link
-              href="/info"
+              href={`/${boardType}`}
               className="bg-gray-900 py-1 px-4 text-base text-white font-semibold ml-2 hover:bg-amber-400 rounded"
             >
               취소
